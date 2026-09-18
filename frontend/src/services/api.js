@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: '/api',
+  baseURL: 'https://waste-worth.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },
