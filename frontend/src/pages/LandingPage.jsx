@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import HeroVideoBackground from '../components/HeroVideoBackground';
 import { Search, Camera, ArrowRight, Recycle, DollarSign, Award, Leaf, HeartHandshake, MapPin, CheckCircle2, ChevronDown, Sparkles, Shield, Cpu, BookOpen, Shirt, Truck } from 'lucide-react';
-import API from '../services/api';
 
 export default function LandingPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -13,26 +12,6 @@ export default function LandingPage() {
     impactScore: 82
   });
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetchStats();
-  }, []);
-
-  const fetchStats = async () => {
-    try {
-      const res = await API.get('/admin/dashboard');
-      if (res.data.success && res.data.data) {
-        setStats({
-          wasteDivertedKg: res.data.data.totalWasteDivertedKg || 42.5,
-          valueGenerated: res.data.data.totalValueGenerated || 1280,
-          greenPoints: res.data.data.totalGreenPoints || 540,
-          impactScore: 82
-        });
-      }
-    } catch (err) {
-      console.log('Using default landing stats:', err);
-    }
-  };
 
   const handleHeroSearch = (e) => {
     e.preventDefault();
