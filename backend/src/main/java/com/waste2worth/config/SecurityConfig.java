@@ -66,7 +66,8 @@ public class SecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> 
-                auth.requestMatchers("/api/auth/**").permitAll()
+                auth.requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
+                    .requestMatchers("/api/auth/**").permitAll()
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/waste/categories", "/api/centers/nearby", "/api/leaderboard", "/api/rewards").permitAll()
                     .requestMatchers("/api/admin/**").hasAuthority("ROLE_ADMIN")
