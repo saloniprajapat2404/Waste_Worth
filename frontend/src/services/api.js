@@ -1,10 +1,12 @@
 ﻿import axios from 'axios';
 
 const requestCache = new Map();
+const API_BASE_URL = import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? 'http://localhost:8080' : 'https://waste-worth.onrender.com');
 
 const API = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL || 'https://waste-worth.onrender.com'}/api`,
-  timeout: 10000,
+  baseURL: `${API_BASE_URL}/api`,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },

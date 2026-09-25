@@ -9,12 +9,18 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (token) {
-      fetchProfile();
-    } else {
+    if (!token) {
       setLoading(false);
+      return;
     }
-  }, [token]);
+
+    if (user?.email) {
+      setLoading(false);
+      return;
+    }
+
+    fetchProfile();
+  }, [token, user?.email]);
 
   const fetchProfile = async () => {
     try {
@@ -23,8 +29,10 @@ export const AuthProvider = ({ children }) => {
         setUser(res.data.data);
       }
     } catch (err) {
-      console.error('Failed to fetch user profile:', err);
-      logout();
+      console.warn('Profile refresh is unavailable right now, keeping the session intact:', err);
+      if (!user) {
+        logout();
+      }
     } finally {
       setLoading(false);
     }
@@ -41,6 +49,7 @@ export const AuthProvider = ({ children }) => {
       greenPoints: authData.greenPoints,
       impactScore: authData.impactScore
     });
+    setLoading(false);
   };
 
   const logout = () => {
